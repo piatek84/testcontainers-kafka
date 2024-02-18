@@ -21,19 +21,12 @@ public class NotificationProducer {
     }
 
     public void produce(){
-
-        Properties properties = new Properties();
-        properties.setProperty(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
-        properties.setProperty(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
-        properties.setProperty(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, NotificationSerializer.class.getName());
-
         Faker faker = new Faker();
-
         LocationNotification locationNotification = new LocationNotification();
         locationNotification.setLongitude(faker.address().longitude());
         locationNotification.setLatitude(faker.address().latitude());
 
-        KafkaProducer<String, LocationNotification> producer = new KafkaProducer<>(properties);
+        KafkaProducer<String, LocationNotification> producer = createProducer();
         ProducerRecord<String, LocationNotification> producerRecord = new ProducerRecord<>(topicName, locationNotification);
 
         producer.send(producerRecord);
@@ -42,11 +35,13 @@ public class NotificationProducer {
         producer.close();
     }
 
-    public void setBootstrapServers(String bootstrapServers) {
-        this.bootstrapServers = bootstrapServers;
+    private KafkaProducer<String, LocationNotification> createProducer() {
+        Properties properties = new Properties();
+        properties.setProperty(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
+        properties.setProperty(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
+        properties.setProperty(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, NotificationSerializer.class.getName());
+
+        return new KafkaProducer<>(properties);
     }
 
-    public void setTopicName(String topicName) {
-        this.topicName = topicName;
-    }
 }
