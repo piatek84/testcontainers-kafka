@@ -14,9 +14,13 @@ public class LocationController {
     @Value(value = "${spring.kafka.bootstrap-servers}")
     private String bootstrapAddress;
 
+    @Value(value = "${topic}")
+    private String topicName;
+
+
     @GetMapping("/location")
     public ResponseEntity<LocationNotification> location() {
-        NotificationProducer producer = new NotificationProducer(bootstrapAddress);
+        NotificationProducer producer = new NotificationProducer(bootstrapAddress, topicName);
         producer.produce();
         return new ResponseEntity<>(null, HttpStatus.CREATED);
     }

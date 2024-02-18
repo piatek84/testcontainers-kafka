@@ -7,20 +7,17 @@ import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.serialization.StringSerializer;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.kafka.annotation.EnableKafka;
-import org.springframework.stereotype.Component;
-
 
 import java.util.Properties;
 public class NotificationProducer {
 
-    private String topicName = "notifications";
-    private String bootstrapServers;
 
-    public NotificationProducer(String bootstrapServers) {
+    private String bootstrapServers;
+    private String topicName;
+
+    public NotificationProducer(String bootstrapServers, String topicName) {
         this.bootstrapServers = bootstrapServers;
+        this.topicName = topicName;
     }
 
     public void produce(){

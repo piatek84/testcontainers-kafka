@@ -1,10 +1,8 @@
 package com.example.Testcontainerskafka.model;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
 
 public class LocationNotification extends Notification implements Serializable {
 
