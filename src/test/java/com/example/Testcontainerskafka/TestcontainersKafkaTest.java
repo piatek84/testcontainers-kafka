@@ -5,6 +5,7 @@ import com.example.Testcontainerskafka.model.Notification;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.rnorth.ducttape.unreliables.Unreliables;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,7 +26,6 @@ import java.util.concurrent.TimeUnit;
 
 import static com.example.Testcontainerskafka.Utils.createKafkaConsumer;
 import static io.restassured.RestAssured.given;
-import static org.junit.Assert.assertNotNull;
 import static org.springframework.http.HttpStatus.CREATED;
 
 @Testcontainers
@@ -70,9 +70,9 @@ public class TestcontainersKafkaTest {
 
             for (ConsumerRecord<String, Notification> record : records) {
                 LocationNotification consumedLocationNotification = (LocationNotification) record.value();
-                assertNotNull(consumedLocationNotification);
-                assertNotNull(consumedLocationNotification.getLatitude());
-                assertNotNull(consumedLocationNotification.getLongitude());
+                Assertions.assertNotNull(consumedLocationNotification);
+                Assertions.assertNotNull(consumedLocationNotification.getLatitude());
+                Assertions.assertNotNull(consumedLocationNotification.getLongitude());
                 System.out.println(
                         "https://www.google.com/search?q="
                                 + consumedLocationNotification.getLatitude()
