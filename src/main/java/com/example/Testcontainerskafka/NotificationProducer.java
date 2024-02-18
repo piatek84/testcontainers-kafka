@@ -36,7 +36,6 @@ public class NotificationProducer {
         KafkaProducer<String, LocationNotification> producer = new KafkaProducer<>(properties);
         ProducerRecord<String, LocationNotification> producerRecord = new ProducerRecord<>(topicName, locationNotification);
 
-        System.out.println("************ Producing ************ " + producerRecord.value());
         producer.send(producerRecord);
 
         producer.flush();
